@@ -15,7 +15,7 @@ public class LoginScreen : Screen
         _printer = printer;
         _log = log;
     }
-    
+
     public override void Init()
     {
         _printer.Clear();

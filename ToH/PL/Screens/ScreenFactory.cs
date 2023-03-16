@@ -1,5 +1,3 @@
-using System.Dynamic;
-using System.Reflection.Metadata;
 using ToH.BLL;
 using ToH.Data;
 using ToH.Log;
@@ -13,7 +11,7 @@ public class ScreenFactory : IScreenFactory
     private readonly ILog _log;
     private HeroesListScreen? _heroesListScreen;
     private HeroScreen? _heroScreen;
-    private ISessionController _sessionController;
+    private readonly ISessionController _sessionController;
 
     public ScreenFactory(IHeroesController heroesController, ISessionController sessionController, IPrinter printer, ILog log)
     {
@@ -23,7 +21,7 @@ public class ScreenFactory : IScreenFactory
         _sessionController = sessionController;
     }
 
-    public Screen? CreateScreen(Type type, Hero? hero = null)
+    public Screen CreateScreen(Type type, Hero? hero = null)
     {
         Console.WriteLine(type);
         if (type == typeof(HeroesListScreen))
@@ -43,7 +41,7 @@ public class ScreenFactory : IScreenFactory
             return new LoginScreen(_sessionController, _printer, _log);
         }
         _log.Error($"ScreenFactory.createScreen: Can't create type {type} with parameters {hero}");
-        return null; // TODO replace with something usefull
+        return new LoginScreen(new SessionController(), new ConsolePrinter(), _log);
     }
 
     private Screen HeroScreen(Hero hero, ILog log)
@@ -55,7 +53,7 @@ public class ScreenFactory : IScreenFactory
         _heroScreen!.Hero = hero;
         return _heroScreen;
     }
-    
+
     public Screen HeroesListScreen(ILog log)
     {
         if (_heroesListScreen == null)
