@@ -9,11 +9,11 @@ namespace ToH.Tests.Integration;
 
 public class DashboardScreenTest
 {
-    private ListPrinter _printer;
-    private DashboardScreen _uui;
-    private HeroesContainer db;
-    private HeroesController heroesController;
-    private SessionController sessionController;
+    private readonly ListPrinter _printer;
+    private readonly DashboardScreen _uui;
+    private readonly HeroesContainer db;
+    private readonly HeroesController heroesController;
+    private readonly SessionController sessionController;
 
 
     public DashboardScreenTest()
@@ -36,9 +36,9 @@ public class DashboardScreenTest
         var printed = _printer.Lines();
         var heroListBeginning = printed.FindLastIndex(s => s.StartsWith("+++++++"));
         Assert.Equal(4, heroListBeginning);
-        
+
         // Top hero list consists of 3 heroes.   +1 is to exclude string "+++++...."
-        Assert.Equal(3, printed.Count - (heroListBeginning + 1));
+        Assert.Equal(3, printed.Count - (heroListBeginning));
     }
 }
 
